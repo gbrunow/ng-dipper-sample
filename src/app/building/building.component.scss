@@ -1,0 +1,28 @@
+$building-width: 133px;
+$roof-height: 50px;
+
+.building {
+  //   background: grey;
+  min-width: $building-width;
+  margin-top: $roof-height;
+  border-bottom: 30px solid black;
+  position: relative;
+}
+
+.building::before {
+  content: ' ';
+  width: 0;
+  height: 0;
+  border-top: $roof-height solid transparent;
+  border-bottom: 0px solid transparent;
+  border-left: $building-width solid black;
+}
+
+.elevator {
+  position: absolute;
+  height: 55px;
+  width: 100%;
+  background: sandybrown;
+  bottom: 0;
+  z-index: -1;
+}
