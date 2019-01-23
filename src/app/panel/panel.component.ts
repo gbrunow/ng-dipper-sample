@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import anime from 'animejs/lib/anime.es.js';
 
+// import * as anime from 'animejs';
 @Component({
   selector: 'app-panel',
   templateUrl: './panel.component.html',
@@ -17,6 +19,19 @@ export class PanelComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  move(floor: number) {
+    console.log(floor);
+
+    const floorHeight = 70;
+
+    anime({
+      targets: '.elevator',
+      translateY: -(floorHeight * (floor - 1)),
+      duration: 500 * floor,
+      easing: 'easeInOutQuad'
+    });
   }
 
 }

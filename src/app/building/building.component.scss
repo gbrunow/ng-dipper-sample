@@ -1,12 +1,16 @@
-$building-width: 133px;
+@import '~@angular/material/theming';
+@import 'src/styles/variables.scss';
+
+$building-width: 130px;
 $roof-height: 50px;
 
 .building {
   //   background: grey;
   min-width: $building-width;
   margin-top: $roof-height;
-  border-bottom: 30px solid black;
+  border-bottom: 30px solid $building-color;
   position: relative;
+  @include mat-elevation(7);
 }
 
 .building::before {
@@ -15,14 +19,14 @@ $roof-height: 50px;
   height: 0;
   border-top: $roof-height solid transparent;
   border-bottom: 0px solid transparent;
-  border-left: $building-width solid black;
+  border-left: $building-width solid $building-color;
 }
 
 .elevator {
   position: absolute;
-  height: 55px;
+  height: 60px;
   width: 100%;
-  background: sandybrown;
-  bottom: 0;
+  background: #ff6699;
+  bottom: 5px;
   z-index: -1;
 }

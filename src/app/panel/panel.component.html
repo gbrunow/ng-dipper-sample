@@ -1,5 +1,5 @@
 <div class="panel">
   <ng-container *ngFor="let floor of numberOfFloors; let i = index">
-    <button mat-fab color="basic">{{floors - i}}</button>
+    <button mat-fab color="basic" (click)="move(floors - i)">{{floors - i}}</button>
   </ng-container>
 </div>
