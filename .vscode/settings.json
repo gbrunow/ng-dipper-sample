@@ -1,0 +1,25 @@
+{
+  "ego.power-tools": {
+    "buttons": [{
+        "if": "$fs.existsSync( $v['workspaceRoot'] + '/node_modules/dipper.js' )",
+        "text": "Remove Dipper.js",
+        "tooltip": "Remove dipper.js module",
+        "action": {
+          "type": "shell",
+          "command": "npm uninstall dipper.js",
+          "silent": false
+        }
+      },
+      {
+        "if": "$fs.existsSync( $v['workspaceRoot'] + '/node_modules' ) && !$fs.existsSync( $v['workspaceRoot'] + '/node_modules/dipper.js' )",
+        "text": "Install Dipper.js",
+        "tooltip": "Install dipper.js module",
+        "action": {
+          "type": "shell",
+          "command": "npm i dipper.js",
+          "silent": false
+        }
+      }
+    ]
+  }
+}

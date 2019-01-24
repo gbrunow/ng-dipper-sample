@@ -12,6 +12,9 @@ export class PanelComponent implements OnInit {
 
   @Input() floors = 10;
 
+  private _currentFloor = 1;
+  private _currentAnimation: any;
+
   public get numberOfFloors(): Array<any> {
     return Array(this.floors);
   }
@@ -22,16 +25,21 @@ export class PanelComponent implements OnInit {
   }
 
   move(floor: number) {
-    console.log(floor);
-
     const floorHeight = 70;
-
-    anime({
+    const animationParams = {
       targets: '.elevator',
       translateY: -(floorHeight * (floor - 1)),
-      duration: 500 * floor,
-      easing: 'easeInOutQuad'
-    });
+      duration: 500 * Math.abs(this._currentFloor - floor),
+      easing: 'easeInOutQuad',
+    };
+
+    if (this._currentAnimation && !this._currentAnimation.completed) {
+      this._currentAnimation.complete = () => anime(animationParams);
+    } else {
+      this._currentAnimation = anime(animationParams);
+    }
+
+    this._currentFloor = floor;
   }
 
 }
