@@ -1,7 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import anime from 'animejs/lib/anime.es.js';
 
-// import * as anime from 'animejs';
+export interface Movement {
+  translateY: number;
+  duration: number;
+  floor: number;
+}
 @Component({
   selector: 'app-panel',
   templateUrl: './panel.component.html',
@@ -13,7 +17,14 @@ export class PanelComponent implements OnInit {
   @Input() floors = 10;
 
   private _currentFloor = 1;
-  private _currentAnimation: any;
+  private _animation: any;
+  private _timeline: any = anime.timeline({
+    targets: '.elevator',
+    easing: 'easeInOutQuad',
+    delay: 500,
+  });
+
+  private _floors: number[] = [];
 
   public get numberOfFloors(): Array<any> {
     return Array(this.floors);
@@ -25,21 +36,31 @@ export class PanelComponent implements OnInit {
   }
 
   move(floor: number) {
-    const floorHeight = 70;
-    const animationParams = {
-      targets: '.elevator',
-      translateY: -(floorHeight * (floor - 1)),
-      duration: 500 * Math.abs(this._currentFloor - floor),
-      easing: 'easeInOutQuad',
-    };
-
-    if (this._currentAnimation && !this._currentAnimation.completed) {
-      this._currentAnimation.complete = () => anime(animationParams);
+    if (!this._animation || this._animation.completed) {
+      this._animation = this.animate(floor);
     } else {
-      this._currentAnimation = anime(animationParams);
+      this._floors.push(floor);
     }
-
-    this._currentFloor = floor;
   }
 
+  animate(floor: number): any {
+    const floorHeight = 70;
+
+    const translateY = -(floorHeight * (floor - 1));
+    const duration = 500 * Math.abs(this._currentFloor - floor);
+
+    return anime({
+      targets: '.elevator',
+      easing: 'easeInOutQuad',
+      delay: 500,
+      translateY,
+      duration,
+      complete: () => {
+        this._currentFloor = floor;
+        if (this._floors.length > 0) {
+          this._animation.children.push(this.animate(this._floors.shift()));
+        }
+      }
+    });
+  }
 }
