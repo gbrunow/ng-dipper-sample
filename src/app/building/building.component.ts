@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ElevatorHandler } from 'src/_classes/elevator.handler';
 
 @Component({
   selector: 'app-building',
@@ -13,9 +14,12 @@ export class BuildingComponent implements OnInit {
     return Array(this.floors);
   }
 
-  constructor() { }
+  constructor(
+    private elevatorHandler: ElevatorHandler
+  ) { }
 
   ngOnInit() {
+    this.elevatorHandler.floorCount = this.floors;
   }
 
 }

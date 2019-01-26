@@ -1,0 +1,14 @@
+.numbers-container {
+  height: 100%;
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  align-content: space-between;
+
+  .floor-number {
+    margin: auto;
+    color: white;
+    font-weight: lighter;
+    font-size: xx-large;
+  }
+}

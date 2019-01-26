@@ -3,6 +3,7 @@ import { MatButtonModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { ElevatorHandler } from '../_classes/elevator.handler';
 import { AppComponent } from './app.component';
 import { BuildingComponent } from './building/building.component';
 import { ElevatorComponent } from './elevator/elevator.component';
@@ -22,7 +23,7 @@ import { PanelComponent } from './panel/panel.component';
     BrowserAnimationsModule,
     MatButtonModule,
   ],
-  providers: [],
+  providers: [ElevatorHandler],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

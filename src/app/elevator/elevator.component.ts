@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { ElevatorHandler } from '../../_classes/elevator.handler';
+
 @Component({
   selector: 'app-elevator',
   templateUrl: './elevator.component.html',
@@ -7,7 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ElevatorComponent implements OnInit {
 
-  constructor() { }
+  public get floor(): number {
+    return this.elevatorHandler.currentFloor;
+  }
+
+  constructor(
+    private elevatorHandler: ElevatorHandler
+  ) { }
 
   ngOnInit() {
   }
