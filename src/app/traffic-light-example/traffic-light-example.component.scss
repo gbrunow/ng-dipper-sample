@@ -1,0 +1,53 @@
+:host {
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+@import '~@angular/material/theming';
+
+.traffic-light {
+  background: rgba(55, 55, 55, 0.85);
+  margin: auto;
+  border-radius: 15px;
+  border: 3px solid rgb(100, 100, 100);
+  @include mat-elevation(7);
+
+  .light.green {
+    background: rgba(0, 200, 80, 0.5);
+  }
+
+  .light.red {
+    background: rgba(255, 68, 68, 0.5);
+  }
+
+  .light.yellow {
+    background: rgba(255, 187, 50, 0.5);
+  }
+}
+
+$light-size: 70px;
+
+.light {
+  height: $light-size;
+  width: $light-size;
+  border-radius: 50%;
+  border: 1px solid rgb(133, 133, 133);
+  margin: 15px;
+  transition: all .5s;
+}
+
+.traffic-light.green .light.green {
+  background: rgba(0, 200, 80, 1);
+  box-shadow: 0px 0px 15px 0px rgba(0, 200, 80, 0.5);
+}
+
+.traffic-light.red .light.red {
+  background: rgba(255, 68, 68, 1);
+  box-shadow: 0px 0px 15px 0px rgba(255, 68, 68, 0.5);
+}
+
+.traffic-light.yellow .light.yellow {
+  background: rgba(255, 187, 50, 1);
+  box-shadow: 0px 0px 15px 0px rgba(255, 187, 50, 0.5);
+}
