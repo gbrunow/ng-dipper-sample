@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-import { ElevatorHandler } from '../../_classes/elevator.handler';
+import { ElevatorHandler } from 'src/_classes/elevator.handler';
 
 @Component({
   selector: 'app-elevator',
