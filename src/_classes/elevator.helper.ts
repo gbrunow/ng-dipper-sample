@@ -28,6 +28,24 @@ export module ElevatorHelper {
         return direction;
     }
 
+    export function getDirectionFromContext(context): Direction {
+        let direction: Direction;
+
+        if (context.floors.length > 0) {
+            if (context.floors.every(f => f > context.currentFloor)) {
+                direction = { enum: DirectionEnum.up, str: 'up' };
+            } else if (context.floors.every(f => f < context.currentFloor)) {
+                direction = { enum: DirectionEnum.down, str: 'down' };
+            } else {
+                direction = { enum: DirectionEnum.stay, str: 'stay' };
+            }
+        } else {
+            direction = { enum: DirectionEnum.stay, str: 'stay' };
+        }
+
+        return direction;
+    }
+
     export function peekTarget(context, direction: DirectionEnum) {
         let next: number;
         switch (direction) {
@@ -47,29 +65,37 @@ export module ElevatorHelper {
     }
 
     export function visitFloor(context, direction: DirectionEnum) {
-        let next: number;
+        let target: number;
         switch (direction) {
             case DirectionEnum.up:
-                if (context.floors.some(f => f >= context.currentFloor)) {
-                    next = context.floors.shift();
+                const higher = context.floors.filter(f => f >= context.currentFloor);
+                if (higher.length > 0) {
+                    target = higher.shift();
+                    const index = context.floors.indexOf(target);
+                    context.floors.splice(index, 1);
                 }
                 break;
             case DirectionEnum.down:
-                if (context.floors.some(f => f <= context.currentFloor)) {
-                    next = context.floors.pop();
+                const lower = context.floors.filter(f => f <= context.currentFloor);
+                if (lower.length > 0) {
+                    target = lower.pop();
+                    const index = context.floors.indexOf(target);
+                    context.floors.splice(index, 1);
                 }
                 break;
             default:
-                next = context.currentFloor;
+                target = context.currentFloor;
         }
 
-        return next;
+        console.log('queue: ', context.floors);
+
+        return target;
     }
 
     export function animate(context, direction: DirectionEnum, delay: number): any {
         const floorHeight = 70;
 
-        const translateY = floorHeight * direction * (context.currentFloor - 1);
+        const translateY = - floorHeight * (context.currentFloor - 1);
 
         const promise = new Promise((resolve) => {
             anime({

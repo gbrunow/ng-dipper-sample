@@ -47,8 +47,8 @@ export class ElevatorHandler {
         if (!this._floors.includes(floor)) {
             this._floors.push(floor);
             this._floors = this._floors.sort((a, b) => a - b);
-            console.log(`selected: ${floor}`, this._floors);
-            this._stateMachine.trigger('key-press', { floor });
         }
+        // console.log(`selected: ${floor}`, this._floors);
+        this._stateMachine.trigger('key-press', { floor });
     }
 }

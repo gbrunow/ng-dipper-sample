@@ -6,7 +6,12 @@ export const idle = (new State({ name: 'idle' }))
     .hook({
         name: 'enter',
         action: (data) => {
-            console.log(`idle at floor ${data.context.currentFloor}`);
+            const direction = ElevatorHelper.getDirectionFromContext(data.context);
+            if (direction.enum !== DirectionEnum.stay) {
+                idle.emit(direction.str, data);
+            } else {
+                console.log(`idle at floor ${data.context.currentFloor}`);
+            }
             // turn up/down sign off
         }
     })
@@ -70,6 +75,9 @@ export const top = (new State({ name: 'top' }))
         name: 'enter',
         action: (data) => {
             console.log('welcome to the top floor.');
+            if (data.context.floors.length > 0) {
+                top.emit('down', data);
+            }
         }
     })
     .hook({
@@ -94,7 +102,7 @@ export const bottom = (new State({ name: 'bottom' }))
         action: (data) => {
             const direction = ElevatorHelper.getDirection(data);
             if (direction.enum === DirectionEnum.up) {
-                top.emit(direction.str, data);
+                bottom.emit(direction.str, data);
             }
         }
     });
