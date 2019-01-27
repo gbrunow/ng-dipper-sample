@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule, MatTabsModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -27,6 +27,7 @@ import { TrafficLightExampleComponent } from './traffic-light-example/traffic-li
     BrowserModule,
     BrowserAnimationsModule,
     MatButtonModule,
+    MatTabsModule
   ],
   providers: [ElevatorHandler, TrafficLightHandler],
   bootstrap: [AppComponent]
