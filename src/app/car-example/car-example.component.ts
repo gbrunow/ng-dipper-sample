@@ -22,22 +22,25 @@ export class CarExampleComponent implements OnInit {
 
   @HostBinding('class.left')
   public get left(): boolean {
-    return !this.carHandler.turnContext.blinker
+    return this.clock && !this.carHandler.turnContext.blinker
       && this.carHandler.turnContext.left;
   }
 
   @HostBinding('class.right')
   public get right(): boolean {
-    return !this.carHandler.turnContext.blinker
+    return this.clock && !this.carHandler.turnContext.blinker
       && this.carHandler.turnContext.right;
   }
 
   @HostBinding('class.blinker')
   public get blinker(): boolean {
-    return this.carHandler.turnContext.blinker;
+    return this.clock && this.carHandler.turnContext.blinker;
   }
 
+  @HostBinding('class.clock')
+  clock = true;
   ngOnInit() {
+    setInterval(() => this.clock = !this.clock, 500);
   }
 
   turn(direction: string) {

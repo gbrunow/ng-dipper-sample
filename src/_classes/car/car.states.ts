@@ -50,6 +50,7 @@ export const blinker = (new State({ name: 'blinker' }))
                     break;
             }
         }
+        // on: ['right', 'left']
     });
 
 
