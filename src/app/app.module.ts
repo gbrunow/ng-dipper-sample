@@ -12,6 +12,7 @@ import { ElevatorComponent } from './elevator-example/elevator/elevator.componen
 import { FloorComponent } from './elevator-example/floor/floor.component';
 import { PanelComponent } from './elevator-example/panel/panel.component';
 import { TrafficLightExampleComponent } from './traffic-light-example/traffic-light-example.component';
+import { CarExampleComponent } from './car-example/car-example.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { TrafficLightExampleComponent } from './traffic-light-example/traffic-li
     FloorComponent,
     ElevatorExampleComponent,
     TrafficLightExampleComponent,
+    CarExampleComponent,
   ],
   imports: [
     BrowserModule,

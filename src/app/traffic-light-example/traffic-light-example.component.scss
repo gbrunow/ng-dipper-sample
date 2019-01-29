@@ -1,10 +1,10 @@
+@import '~@angular/material/theming';
+
 :host {
   height: 100%;
   width: 100%;
   display: flex;
 }
-
-@import '~@angular/material/theming';
 
 .traffic-light {
   background: rgba(55, 55, 55, 0.85);
