@@ -35,8 +35,8 @@
       <button mat-raised-button (click)="turn('left')">Left</button>
       <button mat-raised-button (click)="blink()">Blinkers</button>
       <button mat-raised-button (click)="turn('right')">Right</button>
-      <button mat-raised-button>Break</button>
-      <button mat-raised-button>Back up</button>
+      <button mat-raised-button (mousedown)="break()" (mouseup)="break()">Break</button>
+      <button mat-raised-button (mousedown)="backup()" (mouseup)="backup()">Back up</button>
     </div>
   </div>
 </div>

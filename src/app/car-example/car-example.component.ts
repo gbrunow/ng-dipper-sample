@@ -15,10 +15,14 @@ export class CarExampleComponent implements OnInit {
   ) { }
 
   @HostBinding('class.break')
-  break = false;
+  public get breaking(): boolean {
+    return this.carHandler.breaking;
+  }
 
   @HostBinding('class.backup')
-  backup = false;
+  public get backingup(): boolean {
+    return this.carHandler.backingup;
+  }
 
   @HostBinding('class.left')
   public get left(): boolean {
@@ -49,5 +53,13 @@ export class CarExampleComponent implements OnInit {
 
   blink() {
     this.carHandler.blink();
+  }
+
+  break() {
+    this.carHandler.break();
+  }
+
+  backup() {
+    this.carHandler.backup();
   }
 }

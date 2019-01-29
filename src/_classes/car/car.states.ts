@@ -57,7 +57,31 @@ export const blinker = (new State({ name: 'blinker' }))
 export const breakOn = (new State())
     .hook({
         name: 'enter',
-        action: () => {
-            // turn break on
+        action: (data) => {
+            data.context.break = true;
+        }
+    });
+
+export const breakOff = (new State())
+    .hook({
+        name: 'enter',
+        action: (data) => {
+            data.context.break = false;
+        }
+    });
+
+export const backupOn = (new State())
+    .hook({
+        name: 'enter',
+        action: (data) => {
+            data.context.backup = true;
+        }
+    });
+
+export const backupOff = (new State())
+    .hook({
+        name: 'enter',
+        action: (data) => {
+            data.context.backup = false;
         }
     });
