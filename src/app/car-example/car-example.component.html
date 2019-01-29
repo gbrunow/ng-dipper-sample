@@ -31,9 +31,12 @@
   </div>
 
   <div class="dashboard">
-    <button mat-raised-button>Left</button>
-    <button mat-raised-button>Right</button>
-    <button mat-raised-button>Break</button>
-    <button mat-raised-button>Blinkers</button>
+    <div class="buttons-container">
+      <button mat-raised-button (click)="turn('left')">Left</button>
+      <button mat-raised-button (click)="blink()">Blinkers</button>
+      <button mat-raised-button (click)="turn('right')">Right</button>
+      <button mat-raised-button>Break</button>
+      <button mat-raised-button>Back up</button>
+    </div>
   </div>
 </div>

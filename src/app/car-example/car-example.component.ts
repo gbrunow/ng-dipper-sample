@@ -1,4 +1,7 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
+import { CarHandler } from 'src/_classes/car/car.handler';
+
+import { blinker } from '../../_classes/car/car.states';
 
 @Component({
   selector: 'app-car-example',
@@ -7,7 +10,9 @@ import { Component, HostBinding, OnInit } from '@angular/core';
 })
 export class CarExampleComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private carHandler: CarHandler
+  ) { }
 
   @HostBinding('class.break')
   break = false;
@@ -16,33 +21,30 @@ export class CarExampleComponent implements OnInit {
   backup = false;
 
   @HostBinding('class.left')
-  left = true;
-
-  @HostBinding('class.right')
-  right = false;
-
-  @HostBinding('class.blinker')
-  blinkers = false;
-
-  ngOnInit() {
-    // setInterval(() => {
-    //   this.break = !this.break;
-    //   this.backup = !this.backup;
-    // }, 1000);
-
-    // this.runBlinkers();
+  public get left(): boolean {
+    return !this.carHandler.turnContext.blinker
+      && this.carHandler.turnContext.left;
   }
 
-  runBlinkers() {
-    setTimeout(() => {
-      this.blinkers = !this.blinkers;
-      if (this.blinkers) {
-        this.left = false;
-        this.right = false;
-      } else {
-        this.left = true;
-      }
-      this.runBlinkers();
-    }, Math.random() * 10000);
+  @HostBinding('class.right')
+  public get right(): boolean {
+    return !this.carHandler.turnContext.blinker
+      && this.carHandler.turnContext.right;
+  }
+
+  @HostBinding('class.blinker')
+  public get blinker(): boolean {
+    return this.carHandler.turnContext.blinker;
+  }
+
+  ngOnInit() {
+  }
+
+  turn(direction: string) {
+    this.carHandler.turn(direction);
+  }
+
+  blink() {
+    this.carHandler.blink();
   }
 }
