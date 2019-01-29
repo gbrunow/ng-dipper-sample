@@ -8,52 +8,39 @@
   align-items: center;
 }
 
-.container {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-direction: column;
-  width: 80%;
-  height: 100%;
-  max-width: 600px;
-}
-
-$line-color: rgb(0, 0, 0);
+$line-color: black;
 $line-size: 3px;
-// $car-color: gray;
 
 @mixin car-fill() {
   background-image: linear-gradient(to bottom, #05372c, #043127, #032c23, #03261e, #02211a);
 }
 
 .car {
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  flex-direction: column;
-
+  height: 80vw;
+  width: 80vw;
+  max-height: 600px;
+  max-width: 600px;
+  margin-bottom: 35px;
 
   .top {
-    padding: 0 35px;
+    padding: 0 6%;
     display: flex;
     justify-content: space-around;
+    height: 35%;
 
     .ceiling {
       width: 100%;
-      height: 200px;
       border: $line-size solid $line-color;
       border-bottom: none;
       border-top-left-radius: 15px;
       border-top-right-radius: 15px;
-      padding: 25px;
-      //   background: $car-color;
+      padding: 5%;
       @include car-fill();
 
       .windshield {
-        height: 55%;
+        height: 60%;
         border: $line-size solid $line-color;
         border-radius: 15px;
-
         background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
         background-repeat: no-repeat;
         background-size: 100vh 100vw;
@@ -62,30 +49,30 @@ $line-size: 3px;
   }
 
   .middle {
-    height: 200px;
+    height: 38%;
     display: flex;
     justify-content: space-around;
     flex-direction: column;
-    border-radius: 25px;
-    padding: 10px;
+    border-radius: 5%/10%;
+    padding: 2%;
     border: $line-size solid $line-color;
     // background: $car-color;
     @include car-fill();
 
     .bumper {
-      height: 100px;
+      height: 50%;
       display: inline-flex;
       justify-content: space-between;
       border-bottom: $line-size solid $line-color;
-      padding: 0 15px 50px 15px;
+      padding: 0 4% 7% 4%;
 
       .tail-light {
         height: 100%;
-        width: 50px;
+        width: 18%;
         display: flex;
         flex-direction: column;
         border: $line-size solid $line-color;
-        border-radius: 25px;
+        border-radius: 40%/30%;
         overflow: hidden;
 
         div {
@@ -113,8 +100,8 @@ $line-size: 3px;
       }
 
       .plate {
-        height: 60px;
-        width: 120px;
+        height: 60%;
+        width: 35%;
         background: white;
         border: $line-size solid $line-color;
         border-radius: 10px;
@@ -130,16 +117,16 @@ $line-size: 3px;
   .bottom {
     display: inline-flex;
     justify-content: space-between;
-    padding: 0 35px;
+    padding: 0 7%;
+    height: 21%;
+    width: 86%;
 
     .tire {
       border: $line-size solid $line-color;
       border-top: none;
-      border-bottom-left-radius: 17px;
-      border-bottom-right-radius: 17px;
-      width: 80px;
-      height: 120px;
-      //   background: black;
+      border-bottom-left-radius: 25%;
+      border-bottom-right-radius: 25%;
+      width: 17%;
       background-image: linear-gradient(to right top, #212121, #1f1f1f, #1d1d1d, #1b1b1b, #191919, #191919, #191919, #191919, #1b1b1b, #1d1d1d, #1f1f1f, #212121);
     }
   }
@@ -157,15 +144,13 @@ $line-size: 3px;
   ::ng-deep .left .turn-light.left,
   ::ng-deep .right .turn-light.right,
   ::ng-deep .blinker .turn-light {
-    // animation: name duration timing-function delay iteration-count direction fill-mode;
     animation: blink 1.2s ease-in-out infinite;
-    //   background: rgba(255, 186, 90, 0.85) !important;
-    //   box-shadow: 0px 0px 15px 0px rgba(255, 186, 90, 0.5);
   }
 }
 
 .dashboard {
   width: 100%;
+  height: 100%;
   display: flex;
   justify-content: space-around;
 }
