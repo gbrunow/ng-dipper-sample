@@ -12,9 +12,9 @@ export interface Direction {
 }
 
 export module ElevatorHelper {
-    export function getDirection({ floor, context }): Direction {
-        const from = context.currentFloor;
-        const to = floor;
+    export function getDirection(data): Direction {
+        const from = data.context.currentFloor;
+        const to = data.floor;
 
         let direction: Direction;
         if (to > from) {
