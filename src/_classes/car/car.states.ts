@@ -5,12 +5,6 @@ export const idle = (new State({ name: 'idle' }))
         name: 'enter',
         action: (data) => {
             data.context.blinker = false;
-
-            // if (data.context.left) {
-            //     idle.emit('left');
-            // } else if (data.context.right) {
-            //     idle.emit('right');
-            // }
         }
     });
 
@@ -50,7 +44,6 @@ export const blinker = (new State({ name: 'blinker' }))
                     break;
             }
         }
-        // on: ['right', 'left']
     });
 
 

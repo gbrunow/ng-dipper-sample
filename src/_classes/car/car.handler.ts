@@ -36,7 +36,7 @@ export class CarHandler {
             .transit({ from: right, to: blinker, on: 'blink' })
             .transit({ from: right, to: left, on: 'left' })
             .transit({ from: blinker, to: idle, on: 'blink' })
-            .transit({ from: blinker, to: blinker, on: 'left' }) // hooks subscribing to events ??
+            .transit({ from: blinker, to: blinker, on: 'left' })
             .transit({ from: blinker, to: blinker, on: 'right' });
 
         this._turnStateMachine.run({ initialState: idle });
