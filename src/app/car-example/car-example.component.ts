@@ -41,6 +41,12 @@ export class CarExampleComponent implements OnInit {
     return this.clock && this.carHandler.turnContext.blinker;
   }
 
+  public get context(): any {
+    return this.carHandler
+      ? this.carHandler.turnContext
+      : {};
+  }
+
   @HostBinding('class.clock')
   clock = true;
   ngOnInit() {

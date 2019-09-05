@@ -157,6 +157,11 @@ $line-size: 3px;
     button {
       margin: 5px;
       min-width: 75px;
+
+      &.pushed {
+        background: #424242;
+        color: white;
+      }
     }
   }
 }

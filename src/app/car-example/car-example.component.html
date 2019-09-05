@@ -32,9 +32,9 @@
 
   <div class="dashboard">
     <div class="buttons-container">
-      <button mat-raised-button (click)="turn('left')">Left</button>
-      <button mat-raised-button (click)="blink()">Blinkers</button>
-      <button mat-raised-button (click)="turn('right')">Right</button>
+      <button mat-raised-button (click)="turn('left')" [ngClass]="{'pushed': context.left}">Left</button>
+      <button mat-raised-button (click)="blink()" [ngClass]="{'pushed': context.blinker}">Blinkers</button>
+      <button mat-raised-button (click)="turn('right')" [ngClass]="{'pushed': context.right}">Right</button>
       <button mat-raised-button (mousedown)="break()" (mouseup)="break()">Break</button>
       <button mat-raised-button (mousedown)="backup()" (mouseup)="backup()">Back up</button>
     </div>
