@@ -1,4 +1,5 @@
 import anime from 'animejs/lib/anime.es.js';
+import { ActionContext } from 'dipper.js';
 
 export enum DirectionEnum {
     up = -1,
@@ -12,9 +13,9 @@ export interface Direction {
 }
 
 export module ElevatorHelper {
-    export function getDirection(data): Direction {
-        const from = data.context.currentFloor;
-        const to = data.floor;
+    export function getDirection(context: ActionContext): Direction {
+        const from = context.global.currentFloor;
+        const to = context.local.floor;
 
         let direction: Direction;
         if (to > from) {
@@ -28,13 +29,13 @@ export module ElevatorHelper {
         return direction;
     }
 
-    export function getDirectionFromContext(context): Direction {
+    export function getDirectionFromContext(context: ActionContext): Direction {
         let direction: Direction;
 
-        if (context.floors.length > 0) {
-            if (context.floors.every(f => f > context.currentFloor)) {
+        if (context.global.floors.length > 0) {
+            if (context.global.floors.every(f => f > context.global.currentFloor)) {
                 direction = { enum: DirectionEnum.up, str: 'up' };
-            } else if (context.floors.every(f => f < context.currentFloor)) {
+            } else if (context.global.floors.every(f => f < context.global.currentFloor)) {
                 direction = { enum: DirectionEnum.down, str: 'down' };
             } else {
                 direction = { enum: DirectionEnum.stay, str: 'stay' };
@@ -46,56 +47,56 @@ export module ElevatorHelper {
         return direction;
     }
 
-    export function peekTarget(context, direction: DirectionEnum) {
+    export function peekTarget(context: ActionContext, direction: DirectionEnum) {
         let next: number;
         switch (direction) {
             case DirectionEnum.up:
-                next = context.floors
-                    .filter(f => f > context.currentFloor)[0];
+                next = context.global.floors
+                    .filter(f => f > context.global.currentFloor)[0];
                 break;
             case DirectionEnum.down:
-                next = context.floors
-                    .filter(f => f < context.currentFloor)[context.floors.length - 1];
+                next = context.global.floors
+                    .filter(f => f < context.global.currentFloor)[context.global.floors.length - 1];
                 break;
             default:
-                next = context.currentFloor;
+                next = context.global.currentFloor;
         }
 
-        return next || context.currentFloor;
+        return next || context.global.currentFloor;
     }
 
-    export function visitFloor(context, direction: DirectionEnum) {
+    export function visitFloor(context: ActionContext, direction: DirectionEnum) {
         let target: number;
         switch (direction) {
             case DirectionEnum.up:
-                const higher = context.floors.filter(f => f >= context.currentFloor);
+                const higher = context.global.floors.filter(f => f >= context.global.currentFloor);
                 if (higher.length > 0) {
                     target = higher.shift();
-                    const index = context.floors.indexOf(target);
-                    context.floors.splice(index, 1);
+                    const index = context.global.floors.indexOf(target);
+                    context.global.floors.splice(index, 1);
                 }
                 break;
             case DirectionEnum.down:
-                const lower = context.floors.filter(f => f <= context.currentFloor);
+                const lower = context.global.floors.filter(f => f <= context.global.currentFloor);
                 if (lower.length > 0) {
                     target = lower.pop();
-                    const index = context.floors.indexOf(target);
-                    context.floors.splice(index, 1);
+                    const index = context.global.floors.indexOf(target);
+                    context.global.floors.splice(index, 1);
                 }
                 break;
             default:
-                target = context.currentFloor;
+                target = context.global.currentFloor;
         }
 
-        console.log('queue: ', context.floors);
+        console.log('queue: ', context.global.floors);
 
         return target;
     }
 
-    export function animate(context, direction: DirectionEnum, delay: number): any {
+    export function animate(context: ActionContext, direction: DirectionEnum, delay: number): any {
         const floorHeight = 70;
 
-        const translateY = - floorHeight * (context.currentFloor - 1);
+        const translateY = - floorHeight * (context.global.currentFloor - 1);
 
         const promise = new Promise((resolve) => {
             anime({
@@ -114,28 +115,28 @@ export module ElevatorHelper {
 
     }
 
-    async function moveToNext(context, direction: DirectionEnum, delay: number) {
+    async function moveToNext(context: ActionContext, direction: DirectionEnum, delay: number) {
         let target = peekTarget(context, direction);
 
-        if (target !== context.currentFloor) {
+        if (target !== context.global.currentFloor) {
             do {
                 target = peekTarget(context, direction);
 
-                context.currentFloor -= direction;
+                context.global.currentFloor -= direction;
                 await animate(context, direction, delay);
 
                 delay = 0;
-            } while (target !== context.currentFloor);
+            } while (target !== context.global.currentFloor);
             visitFloor(context, direction);
         }
 
 
     }
-    export async function move(context, direction: DirectionEnum) {
+    export async function move(context: ActionContext, direction: DirectionEnum) {
         let delay = 0;
         do {
             await moveToNext(context, direction, delay);
             delay = 2000;
-        } while (peekTarget(context, direction) !== context.currentFloor);
+        } while (peekTarget(context, direction) !== context.global.currentFloor);
     }
 }

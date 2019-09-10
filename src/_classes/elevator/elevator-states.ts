@@ -5,22 +5,22 @@ import { DirectionEnum, ElevatorHelper } from './elevator.helper';
 export const idle = (new State({ name: 'idle' }))
     .hook({
         name: 'enter',
-        action: (data) => {
-            const direction = ElevatorHelper.getDirectionFromContext(data.context);
+        action: (context) => {
+            const direction = ElevatorHelper.getDirectionFromContext(context);
             if (direction.enum !== DirectionEnum.stay) {
-                idle.emit(direction.str, data);
+                idle.emit(direction.str, context);
             } else {
-                console.log(`idle at floor ${data.context.currentFloor}`);
+                console.log(`idle at floor ${context.global.currentFloor}`);
             }
             // turn up/down sign off
         }
     })
     .hook({
         name: 'key-press',
-        action: (data) => {
-            const direction = ElevatorHelper.getDirection(data);
+        action: (context) => {
+            const direction = ElevatorHelper.getDirection(context);
             if (direction.enum !== DirectionEnum.stay) {
-                idle.emit(direction.str, data);
+                idle.emit(direction.str, context);
             }
         }
     });
@@ -28,22 +28,22 @@ export const idle = (new State({ name: 'idle' }))
 export const goingUp = (new State({ name: 'up 🔺' }))
     .hook({
         name: 'enter',
-        action: async (data) => {
+        action: async (context) => {
             console.log('up 🔺');
             // turn up sign on
 
-            await ElevatorHelper.move(data.context, DirectionEnum.up);
-            if (data.context.currentFloor === data.context.floorCount) {
-                data = {};
-                goingUp.emit('top', data);
+            await ElevatorHelper.move(context, DirectionEnum.up);
+            if (context.global.currentFloor === context.global.floorCount) {
+                context = {};
+                goingUp.emit('top');
             } else {
-                goingUp.emit('stop', data);
+                goingUp.emit('stop');
             }
         }
     })
     .hook({
         name: 'leave',
-        action: (data) => {
+        action: (context) => {
             // turn up 🔺sign off
         }
     });
@@ -51,21 +51,21 @@ export const goingUp = (new State({ name: 'up 🔺' }))
 export const goingDown = (new State({ name: 'down 🔻' }))
     .hook({
         name: 'enter',
-        action: async (data) => {
+        action: async (context) => {
             console.log('down 🔻');
             // turn down 🔻 sign on
 
-            await ElevatorHelper.move(data.context, DirectionEnum.down);
-            if (data.context.currentFloor === 1) {
-                goingDown.emit('bottom', data);
+            await ElevatorHelper.move(context, DirectionEnum.down);
+            if (context.global.currentFloor === 1) {
+                goingDown.emit('bottom');
             } else {
-                goingDown.emit('stop', data);
+                goingDown.emit('stop');
             }
         }
     })
     .hook({
         name: 'leave',
-        action: (data) => {
+        action: (context) => {
             // turn down 🔻 sign off
         }
     });
@@ -73,19 +73,19 @@ export const goingDown = (new State({ name: 'down 🔻' }))
 export const top = (new State({ name: 'top' }))
     .hook({
         name: 'enter',
-        action: (data) => {
+        action: (context) => {
             console.log('welcome to the top floor.');
-            if (data.context.floors.length > 0) {
-                top.emit('down', data);
+            if (context.global.floors.length > 0) {
+                top.emit('down', context);
             }
         }
     })
     .hook({
         name: 'key-press',
-        action: (data) => {
-            const direction = ElevatorHelper.getDirection(data);
+        action: (context) => {
+            const direction = ElevatorHelper.getDirection(context);
             if (direction.enum === DirectionEnum.down) {
-                top.emit(direction.str, data);
+                top.emit(direction.str, context);
             }
         }
     });

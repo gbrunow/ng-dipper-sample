@@ -3,44 +3,54 @@ import { State } from 'dipper.js';
 export const idle = (new State({ name: 'idle' }))
     .hook({
         name: 'enter',
-        action: (data) => {
-            data.context.blinker = false;
+        action: (context) => {
+            console.log({ idle: context });
+            context.global.blinker = false;
         }
     });
 
 export const left = (new State({ name: 'left' }))
     .hook({
         name: 'enter',
-        action: (data) => {
-            data.context.left = !data.context.left;
-            data.context.right = false;
+        action: (context) => {
+            context.global.left = !context.global.left;
+            context.global.right = false;
+
+            if (!context.global.left) {
+                left.emit('idle');
+            }
         }
     });
 
 export const right = (new State({ name: 'right' }))
     .hook({
         name: 'enter',
-        action: (data) => {
-            data.context.right = !data.context.right;
-            data.context.left = false;
+        action: (context) => {
+            context.global.right = !context.global.right;
+            context.global.left = false;
+
+            if (!context.global.right) {
+                right.emit('idle');
+            }
         }
     });
 
 export const blinker = (new State({ name: 'blinker' }))
     .hook({
         name: 'enter',
-        action: (data) => {
-            switch (data.event) {
+        action: (context) => {
+            console.log('blinker');
+            switch (context.local.event) {
                 case 'left':
-                    data.context.left = !data.context.left;
-                    data.context.right = false;
+                    context.global.left = !context.global.left;
+                    context.global.right = false;
                     break;
                 case 'right':
-                    data.context.right = !data.context.right;
-                    data.context.left = false;
+                    context.global.right = !context.global.right;
+                    context.global.left = false;
                     break;
                 default:
-                    data.context.blinker = !data.context.blinker;
+                    context.global.blinker = !context.global.blinker;
                     break;
             }
         }
@@ -50,31 +60,31 @@ export const blinker = (new State({ name: 'blinker' }))
 export const breakOn = (new State())
     .hook({
         name: 'enter',
-        action: (data) => {
-            data.context.break = true;
+        action: (context) => {
+            context.global.break = true;
         }
     });
 
 export const breakOff = (new State())
     .hook({
         name: 'enter',
-        action: (data) => {
-            data.context.break = false;
+        action: (context) => {
+            context.global.break = false;
         }
     });
 
 export const backupOn = (new State())
     .hook({
         name: 'enter',
-        action: (data) => {
-            data.context.backup = true;
+        action: (context) => {
+            context.global.backup = true;
         }
     });
 
 export const backupOff = (new State())
     .hook({
         name: 'enter',
-        action: (data) => {
-            data.context.backup = false;
+        action: (context) => {
+            context.global.backup = false;
         }
     });
